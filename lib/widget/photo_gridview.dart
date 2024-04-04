@@ -55,7 +55,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                   : const Center(child: CircularProgressIndicator()),
           Positioned(
             left: 16,
-            top: MediaQuery.viewPaddingOf(context).top + 16,
+            top: MediaQuery.of(context).viewPadding.top + 16,
             child: InkWell(
               onTap: () => Navigator.pop(context),
               child: Container(
