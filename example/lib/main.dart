@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: ChatDetail(
+        home: ChatDetailScreen(
       titleChatName: 'Báo Đốm',
       idSenderUser: 'CarDoctor447GARAGE_OWNER',
       chatKey: data,
