@@ -30,8 +30,8 @@ class MediaGridview extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: type == MediaGridviewType.grid
-          ? buildGridLayout(width ?? MediaQuery.sizeOf(context).width)
-          : buildRowLayout(width ?? MediaQuery.sizeOf(context).width, context),
+          ? buildGridLayout(width ?? MediaQuery.of(context).size.width)
+          : buildRowLayout(width ?? MediaQuery.of(context).size.width, context),
     );
   }
 
@@ -254,7 +254,7 @@ class _OneSquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.sizeOf(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return _ImageWidget(
       height: height ?? screenSize.width,
@@ -271,7 +271,7 @@ class _TwoSquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.sizeOf(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -297,7 +297,7 @@ class _ThreeSquare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('check lenght ${listURL.length}');
-    final screenSize = MediaQuery.sizeOf(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
