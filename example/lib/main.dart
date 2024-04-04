@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
-import 'dart:async';
+import 'dart:convert';
 
-import 'package:flutter/services.dart';
-import 'package:package_chat_pie/package_chat_pie.dart';
+import 'package:flutter/material.dart';
+
+import 'package:package_chat_pie/chat_detail/chat_detail.dart';
+import 'package:package_chat_pie/model/message_response.dart';
+import 'package:package_chat_pie/chat_app_key.dart';
+import 'package:piesocket_channels/channels.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,48 +19,92 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _packageChatPiePlugin = PackageChatPie();
+  List<SendMessageResponse> listMessage = [];
+  late PieSocketOptions options;
+  late Channel channel;
+  ChatAppCarDoctorUtilOption data = ChatAppCarDoctorUtilOption(
+      apiKey: 'y5sUErrtnWyif3LddZ97aXJ4xDi8sbkL91g1p3xa',
+      apiSecret: 'YBjSTOa65xpWIWYtpbTkLlhik0IBDDfW',
+      cluseterID: 'free.blr2',
+      getNotifySelf: '1',
+      groupName: 'GR_1697178354776',
+      userIDReal: 'CarDoctor447GARAGE_OWNER');
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    options = PieSocketOptions();
+    options.setClusterId(data.cluseterID);
+    // options.setApiKey("vmUe5lxo19WujTs0MsZxtVN3ZBa74SQx2nhFnDdt");
+    options.setApiKey(data.apiKey);
+
+    PieSocket piesocket = PieSocket(options);
+    channel = piesocket.join(data.groupName);
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _packageChatPiePlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+  addMessage(SendMessageResponse value) async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    value.groupId = 1;
+    print('check add');
+    PieSocketEvent newMessage = PieSocketEvent("new_message");
+    newMessage.setData(json.encode(value));
+    //Publish event
+    channel.publish(newMessage);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
-    );
+        home: ChatDetail(
+      titleChatName: 'Báo Đốm',
+      idSenderUser: 'CarDoctor447GARAGE_OWNER',
+      chatKey: data,
+      listMessage: listMessage,
+      pressSend: (contentMessage) {
+        addMessage(contentMessage);
+      },
+      loadMoreHistory: () {
+        print('loadmoreHistory');
+        setState(() {
+          listMessage.insertAll(0, [
+            SendMessageResponse(
+                originalMessage: 'kkk',
+                username: 'CarDoctor447GARAGE_OWNER',
+                groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(
+                originalMessage: 'kkk',
+                username: 'CarDoctor447GARAGE_OWNER',
+                groupId: 1),
+            SendMessageResponse(
+                originalMessage: "muhaha",
+                username: 'CarDoctor447GARAGE_OWNER',
+                groupId: 1),
+          ]);
+        });
+      },
+      loadMoreNewHistory: () {
+        setState(() {
+          print('loadmoreNewHistory');
+          listMessage.addAll([
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+            SendMessageResponse(originalMessage: '123', groupId: 1),
+          ]);
+        });
+      },
+    ));
   }
 }
