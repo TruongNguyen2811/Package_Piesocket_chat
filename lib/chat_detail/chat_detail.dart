@@ -12,7 +12,7 @@ import 'package:package_chat_pie/model/message_response.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class ChatDetail extends StatefulWidget {
+class ChatDetailScreen extends StatefulWidget {
   List<SendMessageResponse> listMessage;
   ChatAppCarDoctorUtilOption chatKey;
   final Function(SendMessageResponse) pressSend;
@@ -21,7 +21,7 @@ class ChatDetail extends StatefulWidget {
   String titleChatName;
   String idSenderUser;
   AppBar? appBarCustom;
-  ChatDetail({
+  ChatDetailScreen({
     super.key,
     required this.chatKey,
     required this.listMessage,
@@ -34,10 +34,10 @@ class ChatDetail extends StatefulWidget {
   });
 
   @override
-  State<ChatDetail> createState() => _ChatDetailState();
+  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailState extends State<ChatDetail> {
+class _ChatDetailScreenState extends State<ChatDetailScreen> {
   late RefreshController controller;
   late ChatDetailCubit _cubit;
   final ItemScrollController itemScrollController = ItemScrollController();
