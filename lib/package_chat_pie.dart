@@ -6,7 +6,7 @@
 //   }
 // }
 
-library package_chat_pie
+library package_chat_pie;
 
 export 'chat_detail/chat_detail.dart';
 export 'input/input.dart';
