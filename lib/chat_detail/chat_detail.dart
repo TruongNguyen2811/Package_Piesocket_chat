@@ -163,11 +163,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             InputComponent(
               press: (value) {
                 SendMessageResponse message = SendMessageResponse(
-                  originalMessage: value['originalMessage'],
-                  filteredMessage: value['originalMessage'],
-                  username: widget.idSenderUser,
-                  // attachmentType: ,
-                );
+                    originalMessage: value['originalMessage'],
+                    filteredMessage: value['originalMessage'],
+                    username: widget.idSenderUser,
+                    attachmentType: value['attachmentType'],
+                    linkPreview: value['linkPreview']);
                 widget.pressSend(message);
                 _cubit.addMessage(message);
                 scrollToEnd();
