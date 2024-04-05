@@ -37,10 +37,13 @@ class ChatDetailCubit extends Cubit<ChatDetailState> {
       emit(ChatDetailLoading());
       if (messageSocket.username != idSenderUser) {
         listMessage.add(messageSocket);
+        print('add');
       } else {
         for (var message in listMessage) {
           if (message.attachmentType == messageSocket.attachment) {
+            print('change status ${message.toJson().toString()}');
             message.groupId = messageSocket.groupId;
+            break;
           }
         }
       }
