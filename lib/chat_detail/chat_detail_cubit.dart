@@ -41,7 +41,7 @@ class ChatDetailCubit extends Cubit<ChatDetailState> {
       } else {
         print('check status update');
         for (var message in listMessage) {
-          if (message.attachmentType == messageSocket.attachment) {
+          if (message.attachmentType == messageSocket.attachmentType) {
             print('change status ${message.toJson().toString()}');
             message.groupId = messageSocket.groupId;
             break;
