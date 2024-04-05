@@ -167,6 +167,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     filteredMessage: value['originalMessage'],
                     username: widget.idSenderUser,
                     attachmentType: value['attachmentType'],
+                    groupName: widget.chatKey.groupName,
                     linkPreview: value['linkPreview']);
                 widget.pressSend(message);
                 _cubit.addMessage(message);
