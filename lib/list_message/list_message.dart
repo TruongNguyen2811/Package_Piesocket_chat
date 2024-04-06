@@ -12,7 +12,19 @@ import 'package:package_chat_pie/widget/custom_cache_image.dart';
 class BuildMessage extends StatefulWidget {
   SendMessageResponse message;
   bool isMe;
-  BuildMessage({super.key, required this.message, required this.isMe});
+  Color senderColor;
+  Color otherPeopleColor;
+  Color senderTextColor;
+  Color otherPeopleTextColor;
+  BuildMessage({
+    super.key,
+    required this.message,
+    required this.isMe,
+    required this.senderColor,
+    required this.otherPeopleColor,
+    required this.senderTextColor,
+    required this.otherPeopleTextColor,
+  });
 
   @override
   State<BuildMessage> createState() => _BuildMessageState();
@@ -67,74 +79,87 @@ class _BuildMessageState extends State<BuildMessage> {
                 //   width: 8,
                 // )
               ],
-              if (widget.message.type == null) ...[
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      hidden ? hidden = false : hidden = true;
-                    });
-                  },
-                  child: Column(
-                    crossAxisAlignment: widget.isMe
-                        ? CrossAxisAlignment.end
-                        : CrossAxisAlignment.start,
-                    children: [
-                      MessageText(
-                        message: widget.message,
-                        isMe: widget.isMe,
+              Column(
+                crossAxisAlignment: widget.isMe
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  if (widget.message.type == null) ...[
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          hidden ? hidden = false : hidden = true;
+                        });
+                      },
+                      child: Column(
+                        crossAxisAlignment: widget.isMe
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          MessageText(
+                            message: widget.message,
+                            isMe: widget.isMe,
+                            senderColor: widget.senderColor,
+                            otherPeopleColor: widget.otherPeopleColor,
+                            senderTextColor: widget.senderTextColor,
+                            otherPeopleTextColor: widget.otherPeopleTextColor,
+                          ),
+                          if (hidden && (widget.message.groupId != null)) ...[
+                            const SizedBox(height: 4),
+                            const Text(
+                              'Đã gửi',
+                              // Utils.formatMessageDate(widget.data.createdAtStr!),
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Color.fromRGBO(175, 177, 175, 1),
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                          ]
+                        ],
                       ),
-                      if (widget.message.groupId == null && widget.isMe) ...[
-                        const SizedBox(height: 4),
-                        const Text(
-                          'Đang gửi ...',
-                          // Utils.formatMessageDate(widget.data.createdAtStr!),
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Color.fromRGBO(175, 177, 175, 1),
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                      ],
-                      if (hidden && (widget.message.groupId != null)) ...[
-                        const SizedBox(height: 4),
-                        const Text(
-                          'Đã gửi',
-                          // Utils.formatMessageDate(widget.data.createdAtStr!),
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Color.fromRGBO(175, 177, 175, 1),
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                      ]
-                    ],
-                  ),
-                ),
-              ],
-              if (widget.message.type == 5) ...[
-                Container(
-                  constraints: BoxConstraints(
-                      minWidth: 0, maxWidth: images.length == 1 ? 160 : 246),
-                  child: MediaGridview(
-                    mediaURLs: images,
-                    type: MediaGridviewType.grid,
-                    width: images.length == 1 ? 160 : 246,
-                  ),
-                )
-              ],
-              if (widget.message.type == 7) ...[
-                Container(
-                  constraints: BoxConstraints(
-                      minWidth: 0, maxWidth: images.length == 1 ? 160 : 246),
-                  child: MediaGridview(
-                    mediaURLs: images,
-                    type: MediaGridviewType.grid,
-                    width: images.length == 1 ? 160 : 246,
-                  ),
-                )
-              ],
+                    ),
+                  ],
+                  if (widget.message.type == 5) ...[
+                    Container(
+                      constraints: BoxConstraints(
+                          minWidth: 0,
+                          maxWidth: images.length == 1 ? 160 : 246),
+                      child: MediaGridview(
+                        mediaURLs: images,
+                        type: MediaGridviewType.grid,
+                        width: images.length == 1 ? 160 : 246,
+                      ),
+                    )
+                  ],
+                  if (widget.message.type == 7) ...[
+                    Container(
+                      constraints: BoxConstraints(
+                          minWidth: 0,
+                          maxWidth: images.length == 1 ? 160 : 246),
+                      child: MediaGridview(
+                        mediaURLs: images,
+                        type: MediaGridviewType.grid,
+                        width: images.length == 1 ? 160 : 246,
+                      ),
+                    )
+                  ],
+                  if (widget.message.groupId == null && widget.isMe) ...[
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Đang gửi ...',
+                      // Utils.formatMessageDate(widget.data.createdAtStr!),
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: Color.fromRGBO(175, 177, 175, 1),
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                ],
+              )
             ],
           ),
         ),

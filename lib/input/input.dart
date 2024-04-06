@@ -1,11 +1,15 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:package_chat_pie/model/message_request.dart';
+import 'package:package_chat_pie/ultils/pick_image_video_utils.dart';
 
 // ignore: must_be_immutable
 class InputComponent extends StatefulWidget {
   final Function(Map<String, dynamic>) press;
+  final VoidCallback chooseImage;
   VoidCallback? onTap;
-  InputComponent({super.key, required this.press, this.onTap});
+  InputComponent(
+      {super.key, required this.press, this.onTap, required this.chooseImage});
 
   @override
   State<InputComponent> createState() => _InputComponentState();
@@ -39,7 +43,7 @@ class _InputComponentState extends State<InputComponent> {
             ),
           ),
           IconButton(
-            onPressed: (() {}),
+            onPressed: widget.chooseImage,
             icon: Icon(
               Icons.photo_size_select_actual_outlined,
             ),

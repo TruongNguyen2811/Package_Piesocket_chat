@@ -3,9 +3,21 @@ import 'package:package_chat_pie/model/message_response.dart';
 
 // ignore: must_be_immutable
 class MessageText extends StatelessWidget {
-  MessageText({super.key, required this.message, required this.isMe});
+  MessageText({
+    super.key,
+    required this.message,
+    required this.isMe,
+    required this.senderColor,
+    required this.otherPeopleColor,
+    required this.otherPeopleTextColor,
+    required this.senderTextColor,
+  });
   SendMessageResponse message;
   bool isMe;
+  Color senderColor;
+  Color otherPeopleColor;
+  Color otherPeopleTextColor;
+  Color senderTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +30,7 @@ class MessageText extends StatelessWidget {
       decoration: BoxDecoration(
         // shape: BoxShape.circle,
         // SizedBox(width: 30,);
-        color: isMe ? Color(0xFFF1F1F1) : Color(0xFF00A651),
+        color: isMe ? senderColor : otherPeopleColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -26,7 +38,7 @@ class MessageText extends StatelessWidget {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: isMe ? Colors.black : Color(0xFFF1F1F1),
+          color: isMe ? senderTextColor : otherPeopleTextColor,
         ),
       ),
     );

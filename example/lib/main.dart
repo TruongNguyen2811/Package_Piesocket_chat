@@ -56,6 +56,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: ChatDetailScreen(
+      senderColor: Color(0xFFF1F1F1),
+      otherPeopleColor: Color(0xFF5A7CF4),
       titleChatName: 'Báo Đốm',
       idSenderUser: 'CarDoctor447GARAGE_OWNER',
       chatKey: data,

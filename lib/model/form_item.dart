@@ -102,18 +102,18 @@ class FormData {
       return FormItem.fromJson(itemJson);
     }).toList();
 
-    final List<dynamic>? valueJson1 = json['valueImage'];
-    final List<FormImage>? formItems1 = valueJson1?.map((itemJson) {
+    final List<dynamic>? valueImage = json['valueImage'];
+    final List<FormImage>? formItems1 = valueImage?.map((itemJson) {
       return FormImage.fromJson(itemJson);
     }).toList();
 
-    final List<dynamic>? valueJson2 = json['valueFiles'];
-    final List<FormFile>? formItems2 = valueJson2?.map((itemJson) {
+    final List<dynamic>? valueFiles = json['valueFiles'];
+    final List<FormFile>? formItems2 = valueFiles?.map((itemJson) {
       return FormFile.fromJson(itemJson);
     }).toList();
 
-    final List<dynamic>? valueJson3 = json['valueServices'];
-    final List<FormService>? formItems3 = valueJson3?.map((itemJson) {
+    final List<dynamic>? valueServices = json['valueServices'];
+    final List<FormService>? formItems3 = valueServices?.map((itemJson) {
       return FormService.fromJson(itemJson);
     }).toList();
 
