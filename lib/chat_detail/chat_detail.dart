@@ -9,6 +9,7 @@ import 'package:package_chat_pie/chat_detail/chat_detail_state.dart';
 import 'package:package_chat_pie/input/input.dart';
 import 'package:package_chat_pie/list_message/list_message.dart';
 import 'package:package_chat_pie/model/message_response.dart';
+import 'package:package_chat_pie/ultils/app_color.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -21,6 +22,11 @@ class ChatDetailScreen extends StatefulWidget {
   String titleChatName;
   String idSenderUser;
   AppBar? appBarCustom;
+  final Color? senderColor;
+  final Color? otherPeopleColor;
+  final Color? senderTextColor;
+  final Color? otherPeopleTextColor;
+  Widget? sendIcon;
   ChatDetailScreen({
     super.key,
     required this.chatKey,
@@ -31,6 +37,11 @@ class ChatDetailScreen extends StatefulWidget {
     required this.idSenderUser,
     required this.titleChatName,
     this.appBarCustom,
+    this.senderColor = const Color(0xFFF1F1F1),
+    this.otherPeopleColor = const Color(0xFF00A651),
+    this.senderTextColor = AppColor.black,
+    this.otherPeopleTextColor = const Color(0xFFF1F1F1),
+    this.sendIcon,
   });
 
   @override
@@ -155,6 +166,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     return BuildMessage(
                       message: _cubit.listMessage[index],
                       isMe: isMe,
+                      senderColor: widget.senderColor ?? Color(0xFF00A651),
+                      otherPeopleColor:
+                          widget.otherPeopleColor ?? Color(0xFFF1F1F1),
+                      otherPeopleTextColor:
+                          widget.otherPeopleTextColor ?? Color(0xFFF1F1F1),
+                      senderTextColor: widget.senderTextColor ?? AppColor.black,
                     );
                   }),
                 ),
@@ -172,6 +189,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 widget.pressSend(message);
                 _cubit.addMessage(message);
                 scrollToEnd();
+              },
+              chooseImage: () async {
+                var message =
+                    await _cubit.chooseImage(widget.chatKey.groupName);
+                widget.pressSend(message);
               },
             ),
           ],
